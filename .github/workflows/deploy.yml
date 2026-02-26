@@ -10,7 +10,10 @@ env:
 jobs:
   test:
     environment: testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  #runner machine image.
+    container: #the runs-on operating system will host this container 
+      image: node:16
+      #env: #container level environment vars
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
       MONGODB_CLUSTER_ADDRESS: cluster0.wq5wzhj.mongodb.net
