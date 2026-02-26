@@ -11,18 +11,21 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest  #runner machine image.
-    container: #the runs-on operating system will host this container 
-      image: node:16
+    #container: #the runs-on operating system will host this container 
+    #  image: node:16
       #env: #container level environment vars
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb #check documentation, as its is connection and version specific
-      MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.wq5wzhj.mongodb.net. This 'mongodb' value works only in the case when the container image is running and services are used. docker will automatically create the donker networking environment for the containers to communicate
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
+      #MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.wq5wzhj.mongodb.net. This 'mongodb' value works only in the case when the container image is running and services are used. docker will automatically create the donker networking environment for the containers to communicate
       MONGODB_USERNAME: root #${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: example #${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     services:
       mongodb:
         image: mongo
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
