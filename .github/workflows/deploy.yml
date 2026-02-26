@@ -15,11 +15,17 @@ jobs:
       image: node:16
       #env: #container level environment vars
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: cluster0.wq5wzhj.mongodb.net
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_CONNECTION_PROTOCOL: mongodb #check documentation, as its is connection and version specific
+      MONGODB_CLUSTER_ADDRESS: mongodb #cluster0.wq5wzhj.mongodb.net. This 'mongodb' value works only in the case when the container image is running and services are used. docker will automatically create the donker networking environment for the containers to communicate
+      MONGODB_USERNAME: root #${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: example #${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
+    services:
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - name: Get Code
         uses: actions/checkout@v3
